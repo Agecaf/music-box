@@ -62,3 +62,62 @@ function harmonicContext(data) {
 
 }
 
+
+// Based on a real value calculates a diatonic-like harmonic context. 
+/*
+    .57 Lydian 
+    .43 Ionian
+    .29 Mixolydian
+    .14 Dorian
+    .00 Aeolian
+    .86 Phrygian
+    .71 Locrian
+    .64 Semitone cutoff
+*/
+function diatonic(x) {
+
+    // "Round" a note, take mod 12 so that it's good.
+    // The note change happens between Lydian 0.57, which rounds to 0
+    // and Locrian 0.71, which rounds to 1.
+    let r = (y) => { return math.mod(math.floor(y + 2.5/7), 12); };
+
+    // Closeness to scale (for sorting grace notes)
+    // We rescale to so that 1 tone = 1, 
+    // then compare a value with its rounded (closest true note). 
+    let offDistCompare = (n, m) => {
+        return  ( math.abs(math.round((n-x) / T) - (n-x) / T)
+                - math.abs(math.round((m-x) / T) - (m-x) / T) );
+    }
+
+    // The step between tones is given by considering e.g. going from
+    // B Aeolian 0.00 to C# Locrian 1.71
+    const T = 12/7;
+
+    // root, 2nd, 3rd, etc...
+    let scale = [r(x), r(x+T), r(x+2*T), r(x+3*T), 
+        r(x+4*T), r(x+5*T), r(x+6*T)];
+    
+    let grace = [0,1,2,3,4,5,6,7,8,9,10,11]
+        .filter((n) => !scale.includes(n))
+        .sort(offDistCompare);
+    
+    // Output
+    data = [
+        scale,
+        [scale[0], scale[4]],
+        [scale[2], scale[6]], 
+        [scale[3], scale[1], scale[5]],
+        grace
+    ]
+
+    return harmonicContext(data);
+}
+
+// Diatonic modes
+let lyd7 = (n) => diatonic(n + 4/7);
+let ion7 = (n) => diatonic(n + 3/7);
+let mix7 = (n) => diatonic(n + 2/7);
+let dor7 = (n) => diatonic(n + 1/7);
+let aeo7 = (n) => diatonic(n);
+let phr7 = (n) => diatonic(n - 1/7);
+let loc7 = (n) => diatonic(n - 2/7);
