@@ -130,7 +130,7 @@ function pauseUnpause() {
         cursor('crosshair');
         // noCursor(); 
 
-        bassSynth.triggerAttackRelease(83, '16n');
+        bassSynth.triggerAttackRelease(note(0), '16n');
     }
 
     // Swap the flag!

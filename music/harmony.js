@@ -96,7 +96,7 @@ function* goUpScale(start, harmony) {
 
 
 // Iterator for going down a scale.
-function* goUpScale(start, harmony) {
+function* goDownScale(start, harmony) {
     // Current step
     let n = start
 
@@ -123,6 +123,29 @@ function* zigZagScale(start, harmony, upOrDown = true) {
         yield upOrDown ? u : d;
         yield upOrDown ? d : u;
     }
+}
+
+// Array-like object with negative indices following a harmony
+function harmonyIndex(n, harmony){
+    let out = {};
+
+    // n is the center for our "array"
+    out[0] = n;
+
+    // Populate the array, 200 elements should be more than enough.
+    let [u, d, idx] = [n, n, 1];
+
+    while(idx < 200) {
+        u = nextInScale(u, harmony, true);
+        d = nextInScale(d, harmony, false);
+
+        out[ idx] = u;
+        out[-idx] = d;
+
+        idx++;
+    }
+
+    return out;
 }
 
 
