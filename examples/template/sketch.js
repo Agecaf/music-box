@@ -10,6 +10,9 @@ Template Sketch
 // SETUP 
 // 
 
+// p5.disableFriendlyErrors = true; // Uncomment for performance.
+
+
 // Constants
 let W = 100; let H = 100; // Canvas dimensions
 
@@ -63,7 +66,9 @@ function draw() {
 
     // Instructions on pause
     if (!playing) {
+        
         // Text
+        push();
         fill(0)
         stroke(255);
         strokeWeight(3);
@@ -71,6 +76,7 @@ function draw() {
         textSize(42);
         textFont('Mono');
         text("Press space to play/pause!", W/2, H/3);
+        pop();
 
         return;
     }

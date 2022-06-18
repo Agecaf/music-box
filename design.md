@@ -53,6 +53,46 @@ but in the chord of G (relative -4),
 and in the 5th note in that scale (relative +7),
 then we're at `X-4+7`.
 
+
+
+
+
+
+
+
+# Harmonic Context
+
+A harmonic context is a collection of note tones and 
+information on them which allows one to decide which notes
+to play for a specific purpose.
+
+- Root, 5th, 3rd, 7th, 4th, 2nd, 6th, Grace notes..
+
+- Primary (Root, Fifth)
+- Secondary (3rd, 7th)
+- Tertiary (4th, 2nd, 6th)
+- Grace
+- Color (Prim + sec)
+- Scale (Primary Secondary Tertiary)
+- Full (Primary Secondary Tertiary Grace)
+
+A Harmonic context is built out of an array of arrays with the following information:
+```
+[[root, 2nd, 3rd, 4th, 5th, 6th, 7th],
+[Primary],
+[Secondary],
+[Tertiary],
+[Grace]]
+```
+
+It is then endowed with methods that allow one to find the things above...
+
+
+
+
+
+
+
 # Harmony
 
 
@@ -205,7 +245,7 @@ Up a 2nd: +1.71; Up a 3rd: +3.43; Up a 4th: +5.14; Up a 5th: +6.86;
 
 # Melody
 
-- `Zz` Stay or up/down 
+- `Zz` Stay or up/down (Scale)
 - `Aa` Least up/down
 - `Bb` Tone up/down
 - `Cc` Third up/down
@@ -217,30 +257,30 @@ Up a 2nd: +1.71; Up a 3rd: +3.43; Up a 4th: +5.14; Up a 5th: +6.86;
 
 - `@` Repeat Last command!
 
-- `Yy` Repeat 2ce prev or up/down.
+- `Yy` Repeat 2ce prev or up/down. (Scale)
 - `Xx` 2ce prev least up/down.
 
-- `Ii` Root up/down
-- `Jj` Power up/down
-- `Kk` Triad up/down
+- `Ii` Root up/down 
+- `Jj` Power up/down  // Primary?
+- `Kk` Triad up/down  // Color instead?
 - `Ll` Quad up/down
 - `Mm` Pent up/down
 
-- `Nn` Random least/3rd up.(down)
+- `Nn` Random least/3rd up.(down) // Scale
 - `Oo` Random least/5th up.(down)
 - `Pp` Random 3rd/7th up.(down)
 - `Qq` Random 5rd/9th up.(down)
 
-- `Rr` Triad Random close/near
+- `Rr` Triad Random close/near  //  Color 
 - `Ss`Triad Random Up/down (3)
-- `Tt` Quad Random close/near
+- `Tt` Quad Random close/near // 
 - `Uu` Quad Random Up/down (3)
 
 
-- `v` Random up/down least
-- `V`  Random up/down third
-- `w` Random up/down 4th
-- `W` Random up/down 5th
+- `v` Random up/down; least
+- `V` Random up/down; third
+- `w` Random up/down; 4th
+- `W` Random up/down; 5th
 
 - `1` Root nearest
 - `2` 2nd nearest
@@ -250,6 +290,8 @@ Up a 2nd: +1.71; Up a 3rd: +3.43; Up a 4th: +5.14; Up a 5th: +6.86;
 - `6` 6th nearest
 - `7` 7th nearest
 
+- Primary, Secondary, Tertiary, Color, Scale nearest; up/down; random.
+- Up down etc relative to the note to follow!!!
 
 ## Rhythm
 
