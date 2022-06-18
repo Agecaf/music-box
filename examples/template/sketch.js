@@ -13,8 +13,30 @@ Template Sketch
 // Constants
 let W = 100; let H = 100; // Canvas dimensions
 
+
+// Synths
+let bassSynth;
+
+
 // Flags
 let playing = false;
+let beforeStart = true;
+
+
+// Music, called on first unpause
+function setupMusic() {
+    /* Anything music related has to be setup after the first event, 
+    like a mouse click or in our case, the first time unpausing.*/
+
+    // Synths
+    bassSynth = new Tone.Synth().toMaster();
+
+    // Music loop
+    let loop = new Tone.Loop((time) => {console.log(time)}, "16n").start(0);
+    Tone.Transport.tempo = 120;
+  
+}
+
 
 // from p5js, called once on load
 function setup() {
@@ -28,6 +50,7 @@ function setup() {
     cursor('default');
 
 }
+
 
 
 
@@ -63,6 +86,7 @@ function draw() {
 
 
 
+
 //
 // EVENTS 
 // 
@@ -72,12 +96,12 @@ function keyPressed() {
 
     // Play / Pause
     if(key == " ") {
-        pauseUnpause()
+        pauseUnpause();
     }
-    else { console.log(key); }
+
 }
 
-// Changes the playing flag and all else that needs done.
+// Changes the playing flag and all else that needs done. Called on Space bar.
 function pauseUnpause() {
     
     // Pause
@@ -90,11 +114,23 @@ function pauseUnpause() {
     // Unpause
     else {
 
+        // First time unpausing
+        if(beforeStart) {
+            setupMusic()
+            beforeStart = false;
+        }
+
         // Mouse
         cursor('crosshair');
         // noCursor(); 
+
+        bassSynth.triggerAttackRelease(83, '16n');
     }
 
     // Swap the flag!
     playing = !playing;
+
+    // Toggle the music.
+    Tone.Transport.toggle();
+    
 }
