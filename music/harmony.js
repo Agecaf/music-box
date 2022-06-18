@@ -6,6 +6,128 @@ All things harmony go here!
 
 
 //
+// Note helper functions
+//
+
+/*
+
+Harmonic context information is all in modulo 12,
+while notes are integers which can differe by octaves.
+
+These helper functions help find just the right notes
+around another with certain harmonic properties.
+
+*/
+
+// Check if a note is in tune (part of a set, modulo 12)
+function inTune(n, harmony) {
+    // n should be an integer, 
+    // harmony an array of integers between 0 and 11.
+    return harmony.includes(math.mod(n, 12));
+}
+
+// Find the next note in the scale from a note in or out of the scale.
+function nextInScale(n, harmony, upOrDown = true) {
+    // n should be an integer, 
+    // harmony an array of integers between 0 and 11.
+    // upOrDown should be a bool.
+
+    // Increment
+    let inc = upOrDown ? 1 : -1;
+
+    // Output 
+    let k = n + inc;
+
+    // Find the next one in the scale
+    while(!inTune(k, harmony)) { k += inc; }
+
+    return k;
+}
+
+
+// Note chromatic (semitone) distance
+function chromDist(n, m) {
+    return 6 - math.abs(math.mod(n - m, 12)-6);
+}
+
+// Note circle of 5ths distance
+function circle5thDist(n, m) {
+    return 6 - math.abs(math.mod(7 * (n - m), 12) - 6);
+} 
+
+// Closest note harmonically, with preference to the first
+function nearestInTune(n, harmony) {
+    // Output, mod 12
+    let m = harmony[0];
+
+    // Only replace m if we find a strictly better one down the list.
+    for(let k of harmony) {
+        if (chromDist(n,k) < chromDist(n,m)) {
+            m = k;
+        }
+    }
+
+    // Then decide if we're bettwe off going up or down from n.
+    if (math.mod(m-n, 12) <= 6) {
+        return n + math.mod(m-n, 12);
+    }
+    else {
+        return n + math.mod(m-n, 12) - 12;
+    }
+}
+
+
+//
+// Harmonic Generators 
+// 
+
+
+// Iterator for going up a scale.
+function* goUpScale(start, harmony) {
+    // Current step
+    let n = start
+
+    // Iteration
+    while(math.abs(n) < 1000) {
+        n = nextInScale(n, harmony, true);
+        yield n;
+    }
+}
+
+
+// Iterator for going down a scale.
+function* goUpScale(start, harmony) {
+    // Current step
+    let n = start
+
+    // Iteration
+    while(math.abs(n) < 1000) {
+        n = nextInScale(n, harmony, false);
+        yield n;
+    }
+}
+
+// Iterator for going further and further away from a note, on both sides.
+function* zigZagScale(start, harmony, upOrDown = true) {
+
+    // First element is the start, if it is in harmony
+    if (inTune(start, harmony)) {
+        yield start;
+    }
+
+    let [u, d] = [start, start];
+    
+    while(math.abs(u) < 1000) {
+        u = nextInScale(u, harmony, true);
+        d = nextInScale(d, harmony, false);
+        yield upOrDown ? u : d;
+        yield upOrDown ? d : u;
+    }
+}
+
+
+
+//
 // Harmonic Context
 //
 
@@ -62,6 +184,12 @@ function harmonicContext(data) {
 
 }
 
+
+
+
+//
+// Harmonic Context Builders
+//
 
 // Based on a real value calculates a diatonic-like harmonic context. 
 /*

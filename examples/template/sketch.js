@@ -10,11 +10,11 @@ Template Sketch
 // SETUP 
 // 
 
-// p5.disableFriendlyErrors = true; // Uncomment for performance.
+p5.disableFriendlyErrors = true; // Uncomment for performance.
 
 
 // Constants
-let W = 100; let H = 100; // Canvas dimensions
+let [W, H] = [100, 100]; // Canvas dimensions
 
 
 // Synths
@@ -66,7 +66,7 @@ function draw() {
 
     // Instructions on pause
     if (!playing) {
-        
+
         // Text
         push();
         fill(0)
