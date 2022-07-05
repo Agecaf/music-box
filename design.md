@@ -245,6 +245,33 @@ Up a 2nd: +1.71; Up a 3rd: +3.43; Up a 4th: +5.14; Up a 5th: +6.86;
 
 # Melody
 
+## Commands Note
+
+### Meta
+- `@` Repeat Last (note) command!
+- Reverse Last note command!
+- ??? Return to relative first note
+- Reverse Relative
+- Return to previous note
+
+### Nearest
+- `1` Root nearest
+- `2` 2nd nearest
+- `3` 3rd nearest
+- `4` 4th nearest
+- `5` 5th nearest
+- `6` 6th nearest
+- `7` 7th nearest
+
+
+### Lookbehind
+- ? `Yy` Repeat 2ce prev or up/down. (Scale)
+- ? `Xx` 2ce prev least up/down.
+
+### Lookahead
+- Modifier to make it look ahead?
+
+## Movement Scale
 - `Zz` Stay or up/down (Scale)
 - `Aa` Least up/down
 - `Bb` Tone up/down
@@ -255,10 +282,7 @@ Up a 2nd: +1.71; Up a 3rd: +3.43; Up a 4th: +5.14; Up a 5th: +6.86;
 - `Gg` 7th up/down
 - `Hh` 8ve up/down
 
-- `@` Repeat Last command!
 
-- `Yy` Repeat 2ce prev or up/down. (Scale)
-- `Xx` 2ce prev least up/down.
 
 - `Ii` Root up/down 
 - `Jj` Power up/down  // Primary?
@@ -272,7 +296,7 @@ Up a 2nd: +1.71; Up a 3rd: +3.43; Up a 4th: +5.14; Up a 5th: +6.86;
 - `Qq` Random 5rd/9th up.(down)
 
 - `Rr` Triad Random close/near  //  Color 
-- `Ss`Triad Random Up/down (3)
+- `Ss` Triad Random Up/down (3)
 - `Tt` Quad Random close/near // 
 - `Uu` Quad Random Up/down (3)
 
@@ -282,24 +306,16 @@ Up a 2nd: +1.71; Up a 3rd: +3.43; Up a 4th: +5.14; Up a 5th: +6.86;
 - `w` Random up/down; 4th
 - `W` Random up/down; 5th
 
-- `1` Root nearest
-- `2` 2nd nearest
-- `3` 3rd nearest
-- `4` 4th nearest
-- `5` 5th nearest
-- `6` 6th nearest
-- `7` 7th nearest
 
 - Primary, Secondary, Tertiary, Color, Scale nearest; up/down; random.
 - Up down etc relative to the note to follow!!!
 
-## Rhythm
+### Commands Rhythm
 
 - `/` approach from below
 - `\` approach from above
 - `|` apprach from prev
 - `~` Tremolo Approach
-
 
 - `.` Silence
 - `-` continue
@@ -310,6 +326,7 @@ Up a 2nd: +1.71; Up a 3rd: +3.43; Up a 4th: +5.14; Up a 5th: +6.86;
 - many increasing
 - Ghost echo
 
-
+> `(ab)cde` means ab split the time measure that would otherwise have been 1? cool.
+> `ab[cd e]fgh` means reverse the way cde is written? after doing it?
 
 #

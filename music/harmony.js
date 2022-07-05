@@ -108,10 +108,10 @@ function* goDownScale(start, harmony) {
 }
 
 // Iterator for going further and further away from a note, on both sides.
-function* zigZagScale(start, harmony, upOrDown = true) {
+function* zigZagScale(start, harmony, upOrDown = true, keepFirst = false) {
 
     // First element is the start, if it is in harmony
-    if (inTune(start, harmony)) {
+    if (inTune(start, harmony) && keepFirst) {
         yield start;
     }
 
@@ -200,6 +200,8 @@ function harmonicContext(data) {
     hc.grace        = data[4];
     hc.color        = [].concat(data[1], data[2]);
     hc.scale        = [].concat(data[1], data[2], data[3]);
+    hc.triad        = [].concat(data[1], [data[2][0]]);
+    hc.pentatonic   = [].concat(data[1], data[2], [data[3][0]]);
 
 
     // Return
@@ -216,13 +218,13 @@ function harmonicContext(data) {
 
 // Based on a real value calculates a diatonic-like harmonic context. 
 /*
-    .57 Lydian 
-    .43 Ionian
-    .29 Mixolydian
-    .14 Dorian
-    .00 Aeolian
-    .86 Phrygian
-    .71 Locrian
+    .43 Lydian
+    .29 Ionian
+    .14 Misolydian
+    .00 Dorian 
+    .86 Aeolian
+    .71 Phrygian
+    .57 Locrian
     .64 Semitone cutoff
 */
 function diatonic(x) {
@@ -230,7 +232,7 @@ function diatonic(x) {
     // "Round" a note, take mod 12 so that it's good.
     // The note change happens between Lydian 0.57, which rounds to 0
     // and Locrian 0.71, which rounds to 1.
-    let r = (y) => { return math.mod(math.floor(y + 2.5/7), 12); };
+    let r = (y) => { return math.mod(math.floor(y), 12); }; // y + 2.5/7
 
     // Closeness to scale (for sorting grace notes)
     // We rescale to so that 1 tone = 1, 
@@ -265,10 +267,10 @@ function diatonic(x) {
 }
 
 // Diatonic modes
-let lyd7 = (n) => diatonic(n + 4/7);
-let ion7 = (n) => diatonic(n + 3/7);
-let mix7 = (n) => diatonic(n + 2/7);
-let dor7 = (n) => diatonic(n + 1/7);
-let aeo7 = (n) => diatonic(n);
-let phr7 = (n) => diatonic(n - 1/7);
-let loc7 = (n) => diatonic(n - 2/7);
+let lyd7 = (n) => diatonic(n + 3/7);
+let ion7 = (n) => diatonic(n + 2/7);
+let mix7 = (n) => diatonic(n + 1/7);
+let dor7 = (n) => diatonic(n + 0/7);
+let aeo7 = (n) => diatonic(n - 1/7);
+let phr7 = (n) => diatonic(n - 2/7);
+let loc7 = (n) => diatonic(n - 3/7);

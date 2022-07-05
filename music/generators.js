@@ -9,7 +9,8 @@ running down scales, making chord progressions, etc...
 */
 
 
-// A generator that just repeats an array eternally.
+// A generator that just repeats an array eternally. 
+// [1, 2, 3] -> 1, 2, 3, 1, 2, 3, 1, 2, 3...
 function* repeat(arr) {
     let idx = 0;
     while (true) {
@@ -21,6 +22,7 @@ function* repeat(arr) {
 
 // A generator that repeats a pattern along a range 
 // (which may allow negative numbers in the pattern)
+// [1,1,2]; [0,5] -> 0, 0, 5, 0, 0, 5, 0, 0, 5...
 function* repeatPattern(pattern, range) {
     let idx = 0;
     while (true) {
@@ -46,4 +48,30 @@ function take(n, iterator) {
 
     return out;
 }
-  
+
+
+
+// Choose a random element of an array, uniformly distributed
+function choose(arr) {
+    return arr[Math.floor(Math.random() * arr.length)];
+}
+
+// Choose a random element of an array, with the first elements being much more likely
+function weighted(arr) {
+    return arr[Math.floor(Math.random() * Math.random() * arr.length)];
+}
+
+
+
+// Choose a default value for a set of input data 
+function defaults(data, param, value) {
+    if (!(param in data)) {
+        data[param] = value;
+    }
+}
+
+function mustHave(data, param){
+    if (!(param in data)) {
+        throw new Error('Must have parameter in data: ', param, data);
+    }
+}

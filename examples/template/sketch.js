@@ -33,9 +33,10 @@ function setupMusic() {
 
     // Synths
     bassSynth = new Tone.Synth().toMaster();
+    meloSynth = new Tone.Synth().toMaster();
 
     // Music loop
-    let loop = new Tone.Loop((time) => {console.log(time)}, "16n").start(0);
+    let loop = new Tone.Loop(musicLoop, "4m").start(0);
     Tone.Transport.tempo = 120;
   
 }
@@ -60,6 +61,26 @@ function setup() {
 //
 // LOOP 
 // 
+
+
+function musicLoop (time) {
+
+    hf = (n) => {
+        switch (n % 4) {
+            case 0: return diatonic(-2 * 12/7);
+            case 1: return diatonic(-1 * 12/7);
+            case 2: return diatonic(0 * 12/7);
+            case 3: return diatonic(-3 * 12/7);
+        }
+    }
+    parseMelody("3[a(aa) 3]-[a(ac) P]-[a(aa) p]-_", 
+        hf, 10, meloSynth, time)
+    
+    parseMelody("1515 I515 I51(51) i515", 
+        hf, -10, bassSynth, time)
+
+}
+
 
 // from p5js, called once per frame on loop...
 function draw() {
@@ -129,8 +150,6 @@ function pauseUnpause() {
         // Mouse
         cursor('crosshair');
         // noCursor(); 
-
-        bassSynth.triggerAttackRelease(note(0), '16n');
     }
 
     // Swap the flag!
@@ -140,3 +159,12 @@ function pauseUnpause() {
     Tone.Transport.toggle();
     
 }
+
+
+
+// 
+// Random 
+//
+console.log("Hello")
+
+hf = (n) => {return diatonic(n * 2 * (12/7))}
